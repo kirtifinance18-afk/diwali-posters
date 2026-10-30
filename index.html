@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fill In Space – Happy Diwali</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#04050f;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:8px;font-family:Poppins,system-ui,sans-serif;color:#fff}
+#stage{position:relative;width:min(100%,420px,calc(96vh*9/16));aspect-ratio:9/16;background:#060a1f;border-radius:16px;overflow:hidden;container-type:inline-size;user-select:none;-webkit-user-select:none}
+#scene{position:absolute;inset:0;width:100%;height:100%}
+.bulb{animation:tw 1.3s ease-in-out infinite alternate}.bulb:nth-child(2n){animation-delay:.4s}.bulb:nth-child(3n){animation-delay:.8s}
+@keyframes tw{from{opacity:.35}to{opacity:1}}
+.star{animation:tw 2.2s ease-in-out infinite alternate}
+.lant{transform-box:fill-box;transform-origin:50% 0;animation:swing 3.6s ease-in-out infinite alternate}
+@keyframes swing{from{transform:rotate(-6deg)}to{transform:rotate(6deg)}}
+/* owner */
+#owner{position:absolute;left:50%;margin-left:-22cqw;bottom:0;width:44cqw;z-index:5;overflow:visible}
+#body{animation:bob 2.8s ease-in-out infinite;transform-origin:60px 230px}
+@keyframes bob{50%{transform:scaleY(1.008) translateY(-.6px)}}
+.pose{display:none}.pose.on{display:inline}
+.wave{transform-origin:88px 62px;animation:wave .7s ease-in-out infinite alternate}
+@keyframes wave{from{transform:rotate(-7deg)}to{transform:rotate(9deg)}}
+.wave2{transform-origin:32px 62px;animation:wave2 .75s ease-in-out infinite alternate}
+@keyframes wave2{from{transform:rotate(8deg)}to{transform:rotate(-7deg)}}
+.skyl{animation:lift 16s linear infinite}
+@keyframes lift{0%{transform:translateY(0);opacity:0}10%{opacity:1}85%{opacity:1}100%{transform:translateY(-240px);opacity:0}}
+.spin{transform-box:fill-box;transform-origin:center;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.jump{transform-box:fill-box;transform-origin:50% 100%;animation:jump .7s ease-in-out infinite}
+@keyframes jump{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.offer{transform-origin:88px 62px;animation:offer 1.6s ease-in-out infinite alternate}
+@keyframes offer{from{transform:rotate(-3deg)}to{transform:rotate(4deg)}}
+.nam{transform-origin:60px 86px;animation:nam 1.8s ease-in-out infinite alternate}
+@keyframes nam{from{transform:translateY(0)}to{transform:translateY(-2px)}}
+.blink{transform-box:fill-box;transform-origin:center;animation:blink 4.2s infinite}
+@keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+.fl{transform-box:fill-box;transform-origin:50% 100%;animation:fl .4s ease-in-out infinite alternate}
+@keyframes fl{from{transform:scale(.85,.9)}to{transform:scale(1.12,1.15)}}
+.spk{animation:spk .9s ease-out infinite}
+@keyframes spk{0%{transform:translate(0,0);opacity:1}100%{transform:translate(var(--x),-52px);opacity:0}}
+.ember{animation:tw .2s infinite alternate}
+/* diyas on ground */
+.diya{position:absolute;width:7cqw;height:2.8cqw;background:linear-gradient(#f0b04a,#9c4a14);border-radius:0 0 7cqw 7cqw;box-shadow:0 0 5cqw 1cqw rgba(255,170,50,.5);z-index:3}
+.diya::before{content:"";position:absolute;left:50%;bottom:90%;width:2cqw;height:4.2cqw;margin-left:-1cqw;border-radius:50% 50% 50% 50%/65% 65% 35% 35%;background:radial-gradient(ellipse at 50% 80%,#fff8cf,#ffb300 55%,transparent 75%);filter:drop-shadow(0 0 1.8cqw #ffb300);animation:fl2 .45s ease-in-out infinite alternate}
+.diya:nth-child(2n)::before{animation-duration:.6s}
+@keyframes fl2{from{transform:scale(.88,.94) rotate(-5deg)}to{transform:scale(1.1,1.12) rotate(5deg)}}
+#rocket{position:absolute;left:88cqw;bottom:13cqw;width:6.5cqw;z-index:5;opacity:0}
+#rocket svg{width:100%;display:block}
+#spark{position:absolute;left:50%;top:100%;width:2cqw;height:2cqw;margin:-1cqw 0 0 -1cqw;background:#fff8cf;border-radius:50%;box-shadow:0 0 3cqw 1.4cqw #ffb300;animation:tw .12s infinite alternate;display:none}
+#fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:6}
+.bars{position:absolute;top:2.2cqw;left:4cqw;right:4cqw;display:flex;gap:1.2cqw;z-index:9}
+.bar{flex:1;height:.9cqw;background:rgba(255,255,255,.28);border-radius:9px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:#ffe9a8}.bar.done i{width:100%}
+/* text scenes (in the sky area) */
+.sc{position:absolute;left:0;right:0;top:9cqw;height:46cqw;opacity:0;pointer-events:none;transition:opacity .6s;z-index:7;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:1.6cqw;padding:0 7cqw}
+.sc.on{opacity:1}
+.in{opacity:0}
+.sc.on .in{animation:rise .9s calc(var(--d,0)*.26s) both cubic-bezier(.2,.8,.2,1)}
+@keyframes rise{from{opacity:0;transform:translateY(4cqw) scale(.96)}to{opacity:1;transform:none}}
+.eyebrow{font-size:3cqw;letter-spacing:.32em;text-transform:uppercase;color:#ffd9a0}
+.script{font-family:'Great Vibes','Brush Script MT',cursive;font-size:19cqw;line-height:.95;color:#fff1c9;text-shadow:0 0 5cqw rgba(255,190,90,.65),0 .4cqw 1.5cqw rgba(0,0,0,.6)}
+.script.m{font-size:13.5cqw}
+.t{font-size:3.5cqw;font-weight:300;line-height:1.5;color:#f4ecff;text-shadow:0 .3cqw 1.2cqw rgba(0,0,0,.7)}
+.t b{font-weight:600;color:#ffd9a0}
+.chips{display:flex;flex-wrap:wrap;gap:1.2cqw;justify-content:center}
+.chips span{font-size:2.6cqw;padding:.8cqw 2.4cqw;border:1px solid rgba(255,217,160,.65);border-radius:99px;background:rgba(6,10,31,.55)}
+.row{font-size:3.2cqw;line-height:1.35;color:#f4ecff;text-shadow:0 .3cqw 1.2cqw rgba(0,0,0,.7)}
+.row b{display:block;color:#ffd9a0;font-size:2.4cqw;letter-spacing:.2em;text-transform:uppercase;font-weight:600}
+.crowd{opacity:0;transform:translateX(34px);transition:opacity .7s,transform .7s}
+.crowd.on{opacity:1;transform:none}
+.pbob{transform-box:fill-box;transform-origin:50% 100%;animation:pbob 2.2s ease-in-out infinite}
+@keyframes pbob{50%{transform:scaleY(1.012) translateY(-.8px)}}
+.reach{animation:reach 1.1s ease-in-out infinite alternate;transform-origin:-23px 58px}
+@keyframes reach{from{transform:rotate(-5deg)}to{transform:rotate(7deg)}}
+.ctl label{background:#26242b;color:#eee;border:1px solid #3d3a45;border-radius:99px;padding:7px 14px;font-size:13px;cursor:pointer}
+.tap{position:absolute;top:0;bottom:0;width:38%;z-index:10;cursor:pointer}.tap.l{left:0}.tap.r{right:0}
+.ctl{display:flex;gap:8px}
+.ctl button{background:#26242b;color:#eee;border:1px solid #3d3a45;border-radius:99px;padding:7px 14px;font-size:13px;cursor:pointer}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important}}
+</style>
+</head>
+<body>
+<div id="stage">
+<svg id="scene" viewBox="0 0 360 640" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#050818"/><stop offset=".6" stop-color="#101c44"/><stop offset="1" stop-color="#2a2f5e"/></linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe7b0"/><stop offset="1" stop-color="#e9a95a"/></linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7a6a6a"/><stop offset="1" stop-color="#3e3850"/></linearGradient>
+    <radialGradient id="spill" cx=".5" cy="0" r="1"><stop offset="0" stop-color="#ffcf7a" stop-opacity=".55"/><stop offset="1" stop-color="#ffcf7a" stop-opacity="0"/></radialGradient>
+    <symbol id="kandil" viewBox="0 0 60 150"><line x1="30" y1="0" x2="30" y2="22" stroke="#e8b36a" stroke-width="1.6"/><path d="M22 22H38L42 32H18Z" fill="#b8501f"/><path d="M30 32L52 66L30 100L8 66Z" fill="#e0762d" stroke="#ffd28a" stroke-width="1.6"/><path d="M30 32V100M8 66H52M19 49L41 83M41 49L19 83" stroke="#ffd28a" stroke-width=".9" opacity=".8"/><path d="M30 100L38 108H22Z" fill="#b8501f"/><path d="M30 108V128M24 108L22 140M36 108L38 140" stroke="#e0762d" stroke-width="2.4" stroke-linecap="round"/></symbol>
+    <pattern id="tile" width="36" height="22" patternUnits="userSpaceOnUse"><rect width="36" height="22" fill="none"/><path d="M0 0H36M0 0V22M18 0V22" stroke="rgba(0,0,0,.18)" stroke-width="1"/></pattern>
+  </defs>
+  <rect width="360" height="640" fill="url(#sky)"/>
+  <g id="stars"></g><g id="city"></g><g id="skyl"></g>
+
+  <!-- SHOWROOM -->
+  <rect x="6" y="204" width="348" height="10" fill="#4a2f26"/>
+  <rect x="6" y="214" width="348" height="196" fill="#16171f"/>
+  <!-- sign -->
+  <g stroke="#f2f2f8" stroke-width="2" fill="none" stroke-linejoin="round"><path d="M22 250V228L36 220L50 228V250"/><path d="M30 250V236M40 250V236M30 236H40"/><path d="M42 228V240M38 240H46"/></g>
+  <text x="70" y="244" font-family="Poppins,Arial,sans-serif" font-weight="700" font-size="29" fill="#ecedf5" textLength="262" lengthAdjust="spacingAndGlyphs">FILL IN SPACE</text>
+  <text x="70" y="257" font-family="Poppins,Arial,sans-serif" font-weight="600" font-size="7" fill="#d8d9e6" textLength="262" lengthAdjust="spacingAndGlyphs">YOUR ONE-STOP DESTINATION FOR HOME INTERIORS</text>
+  <g font-family="Poppins,Arial,sans-serif" font-size="6" font-weight="600" text-anchor="middle" fill="#222">
+    <rect x="30" y="266" width="46" height="11" rx="2" fill="#f2f2f6"/><text x="53" y="274">Furniture</text>
+    <rect x="84" y="266" width="66" height="11" rx="2" fill="#f2f2f6"/><text x="117" y="274">Home Furnishings</text>
+    <rect x="158" y="266" width="52" height="11" rx="2" fill="#f2f2f6"/><text x="184" y="274">Home Linen</text>
+    <rect x="218" y="266" width="52" height="11" rx="2" fill="#f2f2f6"/><text x="244" y="274">Home Décor</text>
+    <rect x="278" y="266" width="52" height="11" rx="2" fill="#f2f2f6"/><text x="304" y="274">Accessories</text></g>
+  <!-- windows -->
+  <rect x="14" y="284" width="130" height="122" fill="url(#glass)"/>
+  <rect x="216" y="284" width="130" height="122" fill="url(#glass)"/>
+  <g fill="#b6803f"><rect x="28" y="352" width="66" height="26" rx="7"/><rect x="28" y="336" width="66" height="22" rx="8" fill="#c99552"/></g>
+  <path d="M112 330V382" stroke="#7a5a2a" stroke-width="2"/><path d="M103 318H121L116 332H108Z" fill="#fff6d6"/>
+  <ellipse cx="282" cy="372" rx="34" ry="5" fill="#8b5a2b"/><path d="M262 374V392M302 374V392" stroke="#6a4420" stroke-width="3"/>
+  <path d="M258 284V306M300 284V306" stroke="#6a4420"/><path d="M251 306H265L262 316H254ZM293 306H307L304 316H296Z" fill="#fff6d6"/>
+  <g stroke="#16171f" stroke-width="3"><path d="M14 284H144V406H14ZM216 284H346V406H216Z" fill="none"/><path d="M58 284V406M101 284V406M259 284V406M302 284V406" stroke-width="2"/></g>
+  <!-- arch door -->
+  <path d="M148 410V318C148 296 162 288 180 288C198 288 212 296 212 318V410Z" fill="#f6f6fa"/>
+  <path d="M156 406V320C156 304 166 296 180 296C194 296 204 304 204 320V406Z" fill="url(#glass)"/>
+  <rect x="164" y="372" width="32" height="14" rx="3" fill="#b9833f"/><rect x="164" y="362" width="32" height="14" rx="4" fill="#cfa05a"/>
+  <path d="M180 296V406" stroke="#f6f6fa" stroke-width="3"/>
+  <rect x="150" y="402" width="60" height="7" rx="2" fill="#3f9a4a"/>
+  <!-- plants -->
+  <g fill="#2f8a47"><path d="M130 408C118 380 112 372 104 366C116 368 126 380 134 392Z"/><path d="M134 408C136 376 140 366 148 358C146 372 142 388 140 408Z"/><path d="M128 408C112 396 100 392 92 394C104 388 118 394 130 404Z"/></g>
+  <path d="M120 408H146L142 424H124Z" fill="#f2f2f2"/>
+  <g fill="#2f8a47"><path d="M230 408C242 380 248 372 256 366C244 368 234 380 226 392Z"/><path d="M226 408C224 376 220 366 212 358C214 372 218 388 220 408Z"/><path d="M232 408C248 396 260 392 268 394C256 388 242 394 230 404Z"/></g>
+  <path d="M214 408H240L236 424H218Z" fill="#f2f2f2"/>
+  <!-- fairy lights + lanterns -->
+  <path d="M6 204C60 224 110 196 180 214C250 230 300 196 354 210" fill="none" stroke="#ffd9a0" stroke-width="1"/>
+  <g id="bulbs"></g>
+  <use class="lant" href="#kandil" x="8" y="206" width="26" height="65"/><use class="lant" href="#kandil" x="326" y="206" width="26" height="65" style="animation-delay:-1.8s"/>
+
+  <!-- ground -->
+  <rect x="0" y="408" width="360" height="232" fill="url(#ground)"/><rect x="0" y="408" width="360" height="232" fill="url(#tile)"/>
+  <ellipse cx="180" cy="414" rx="190" ry="42" fill="url(#spill)"/>
+  <g id="rangoli"></g>
+
+  <!-- diyas in front of the showroom -->
+  <g id="garland"></g>
+  <g id="rowDiyas"></g>
+  <!-- cars parked facing the showroom -->
+  <g id="carSlot"><g transform="translate(14 410) scale(1.08)"><ellipse cx="50" cy="77" rx="48" ry="5" fill="rgba(0,0,0,.45)"/><rect x="6" y="56" width="13" height="20" rx="3" fill="#0b0b10"/><rect x="81" y="56" width="13" height="20" rx="3" fill="#0b0b10"/><path d="M6 56Q6 47 14 45H86Q94 47 94 56V66Q94 70 90 70H10Q6 70 6 66Z" fill="#c9cdd6"/><path d="M10 46L14 26Q16 22 22 22H78Q84 22 86 26L90 46Z" fill="#c9cdd6"/><path d="M24 14L28 6Q30 3 35 3H65Q70 3 72 6L76 14Z" fill="#e4e7ee"/><path d="M20 27L24 14Q26 10 31 10H69Q74 10 76 14L80 27Z" fill="#1a2236"/><path d="M30 24L34 13H46L40 24Z" fill="rgba(255,255,255,.16)"/><path d="M9 31H24L26 41H11Z" fill="#d0202e"/><path d="M91 31H76L74 41H89Z" fill="#d0202e"/><rect x="24" y="35" width="52" height="2.2" fill="#c01c2a" opacity=".85"/><path d="M9 31H24L26 41H11Z" fill="#ff5a5a" opacity=".35"/><ellipse cx="17" cy="48" rx="14" ry="3" fill="rgba(255,60,60,.25)"/><ellipse cx="83" cy="48" rx="14" ry="3" fill="rgba(255,60,60,.25)"/><rect x="38" y="55" width="24" height="8" rx="1.2" fill="#f4f1e6" stroke="#999" stroke-width=".6"/><path d="M6 66H94" stroke="#ffffff" stroke-width=".8" opacity=".5"/></g><g transform="translate(238 410) scale(1.08)"><ellipse cx="50" cy="77" rx="48" ry="5" fill="rgba(0,0,0,.45)"/><rect x="6" y="56" width="13" height="20" rx="3" fill="#0b0b10"/><rect x="81" y="56" width="13" height="20" rx="3" fill="#0b0b10"/><path d="M6 56Q6 47 14 45H86Q94 47 94 56V66Q94 70 90 70H10Q6 70 6 66Z" fill="#14151c"/><path d="M10 46L14 28Q16 24 22 24H78Q84 24 86 28L90 46Z" fill="#262833"/><path d="M28 16L31 5Q33 2 38 2H62Q67 2 69 5L72 16Z" fill="#14151c"/><path d="M26 24L30 12H70L74 24Z" fill="#0e1220"/><path d="M34 22L38 14H48L43 22Z" fill="rgba(255,255,255,.14)"/><path d="M12 27Q50 21 88 27" fill="none" stroke="#5a5d70" stroke-width="1.6"/><path d="M9 31H24L26 41H11Z" fill="#d0202e"/><path d="M91 31H76L74 41H89Z" fill="#d0202e"/><rect x="24" y="35" width="52" height="2.2" fill="#c01c2a" opacity=".85"/><path d="M9 31H24L26 41H11Z" fill="#ff5a5a" opacity=".35"/><ellipse cx="17" cy="48" rx="14" ry="3" fill="rgba(255,60,60,.25)"/><ellipse cx="83" cy="48" rx="14" ry="3" fill="rgba(255,60,60,.25)"/><rect x="38" y="55" width="24" height="8" rx="1.2" fill="#f4f1e6" stroke="#999" stroke-width=".6"/><path d="M6 66H94" stroke="#5a5d70" stroke-width=".8" opacity=".5"/></g></g>
+  <!-- people receiving sweets (slide 2) -->
+  <g id="crowdA" class="crowd"></g><g id="crowdB" class="crowd"></g><g id="crowdC" class="crowd"></g>
+</svg>
+
+<div class="diya" style="left:6cqw;bottom:20cqw"></div><div class="diya" style="left:22cqw;bottom:9cqw"></div>
+<div class="diya" style="left:72cqw;bottom:6cqw"></div><div class="diya" style="left:88cqw;bottom:22cqw"></div><div class="diya" style="left:3cqw;bottom:4cqw"></div>
+
+<!-- OWNER: handsome young man in kurta pajama -->
+<svg id="owner" viewBox="-30 0 180 240">
+  <ellipse cx="60" cy="236" rx="42" ry="6" fill="rgba(0,0,0,.35)"/>
+  <g id="body">
+    <path d="M43 140H58L56 224H41Z M62 140H77L79 224H64Z" fill="#f4f0e8"/>
+    <path d="M42 196Q49 200 56 196M42 206Q49 210 56 206M64 196Q71 200 78 196M64 206Q71 210 78 206" fill="none" stroke="#d8d1c0" stroke-width="1.2"/>
+    <path d="M54 224C44 221 34 223 29 229C34 234 48 234 58 232Z" fill="#6b3a22"/><path d="M66 224C76 221 86 223 91 229C86 234 72 234 62 232Z" fill="#6b3a22"/>
+    <path d="M36 230H57M63 230H84" stroke="#b98a52" stroke-width="1.4"/>
+    <path d="M31 58C31 51 42 49 60 49C78 49 89 51 89 58L92 118L97 166C80 171 40 171 23 166L28 118Z" fill="#f5d78c"/>
+    <path d="M60 52V168" stroke="#e3b24c" stroke-width="2.4"/>
+    <path d="M24 160H96L97 166C80 171 40 171 23 166Z" fill="#d6a84a"/>
+    <path d="M28 150L33 168M92 150L87 168" stroke="#d6b266" stroke-width="1.2"/>
+    <g fill="#d6a84a"><circle cx="60" cy="72" r="1.8"/><circle cx="60" cy="90" r="1.8"/><circle cx="60" cy="108" r="1.8"/></g>
+    <path d="M44 68Q48 60 52 68Q48 74 44 68ZM68 68Q72 60 76 68Q72 74 68 68Z" fill="#d6a84a" opacity=".85"/>
+    <rect x="55" y="38" width="10" height="14" fill="#c98f68"/>
+    <path d="M50 49Q60 58 70 49L70 55Q60 64 50 55Z" fill="#e6b95a"/>
+    <ellipse cx="44.5" cy="27" rx="3.2" ry="4.8" fill="#d6a07a"/><ellipse cx="75.5" cy="27" rx="3.2" ry="4.8" fill="#d6a07a"/>
+    <ellipse cx="60" cy="26" rx="15" ry="17.5" fill="#e3ac86"/>
+    <path d="M44 27C41 11 49 2 61 2C73 2 80 10 76 27C74 18 70 13 61 12C52 12 47 18 44 27Z" fill="#1a1412"/>
+    <path d="M47 11C50 -1 66 -4 77 7C70 3 60 3 52 9Z" fill="#1a1412"/><path d="M55 5Q62 2 69 6" stroke="#5a463a" stroke-width="1.2" fill="none"/>
+    <path d="M54 41.5Q60 47.5 66 41.5Z" fill="#fff" stroke="#8a3a3a" stroke-width=".8"/>
+    <g class="blink"><ellipse cx="54" cy="25" rx="3.2" ry="3.4" fill="#fff"/><ellipse cx="66" cy="25" rx="3.2" ry="3.4" fill="#fff"/><circle cx="54.6" cy="25.4" r="2" fill="#2a1a12"/><circle cx="66.6" cy="25.4" r="2" fill="#2a1a12"/><circle cx="55.2" cy="24.6" r=".7" fill="#fff"/><circle cx="67.2" cy="24.6" r=".7" fill="#fff"/></g>
+    <path d="M48 19.5Q54 16.5 59 19M61 19Q66 16.5 72 19.5" fill="none" stroke="#1a1412" stroke-width="2.6" stroke-linecap="round"/>
+    <path d="M60 27Q62.5 31 59 32" fill="none" stroke="#b9805c" stroke-width="1.2" stroke-linecap="round"/>
+    <circle cx="50" cy="32" r="3" fill="#e98b7b" opacity=".25"/><circle cx="70" cy="32" r="3" fill="#e98b7b" opacity=".25"/>
+  </g>
+  <!-- A: Namaste (greeting) -->
+  <g class="pose on" id="pA"><g class="nam">
+    <path d="M32 62L22 94L55 86M88 62L98 94L65 86" fill="none" stroke="#f5d78c" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <ellipse cx="60" cy="84" rx="7.5" ry="10" fill="#dca37b"/><path d="M60 76V92" stroke="#b9805c" stroke-width="1"/></g></g>
+
+  <!-- B: Offering sweets -->
+  <g class="pose" id="pB">
+    <path d="M32 62L22 96L30 120" fill="none" stroke="#f5d78c" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><circle cx="30" cy="124" r="6" fill="#dca37b"/>
+    <g class="offer"><path d="M88 62L108 86L124 96" fill="none" stroke="#f5d78c" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+      <g transform="translate(108 72)"><rect x="0" y="8" width="34" height="18" rx="2" fill="#b3202a"/><rect x="-1" y="4" width="36" height="6" rx="2" fill="#e0a93a"/><rect x="15" y="4" width="4" height="22" fill="#e0a93a"/>
+        <circle cx="8" cy="0" r="5.5" fill="#f08a24"/><circle cx="18" cy="-2" r="6" fill="#f5a03a"/><circle cx="28" cy="0" r="5.5" fill="#f08a24"/></g>
+      <circle cx="126" cy="98" r="6" fill="#dca37b"/></g></g>
+
+  <!-- C: Holding sparklers -->
+  <g class="pose" id="pC"><path d="M32 62L16 84L10 70" fill="none" stroke="#f5d78c" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="66" r="6" fill="#e3ac86"/><line x1="9" y1="66" x2="-8" y2="42" stroke="#8a8f99" stroke-width="2"/><g transform="translate(-9 40)"><circle r="11" fill="rgba(255,200,80,.45)"/><g class="spin" stroke="#ffe9a8" stroke-width="1.4"><path d="M0 -11V11M-11 0H11M-8 -8L8 8M-8 8L8 -8"/></g><circle r="2.4" fill="#fff"/></g><path d="M88 62L108 78L120 60" fill="none" stroke="#f5d78c" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><circle cx="122" cy="56" r="6" fill="#e3ac86"/><line x1="122" y1="56" x2="138" y2="32" stroke="#8a8f99" stroke-width="2"/><g transform="translate(140 30)"><circle r="11" fill="rgba(255,200,80,.45)"/><g class="spin" stroke="#ffe9a8" stroke-width="1.4"><path d="M0 -11V11M-11 0H11M-8 -8L8 8M-8 8L8 -8"/></g><circle r="2.4" fill="#fff"/></g></g>
+
+  <!-- D: Welcoming to the showroom -->
+  <g class="pose" id="pD">
+    <path d="M32 62L18 92L36 114" fill="none" stroke="#f5d78c" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <g class="wave"><path d="M88 62L108 48L122 30" fill="none" stroke="#f5d78c" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="125" cy="24" rx="6" ry="8" fill="#dca37b" transform="rotate(25 125 24)"/></g></g>
+
+  <!-- E: Both arms raised, cheering at the lanterns and skyshots -->
+  <g class="pose" id="pE">
+    <g class="wave2"><path d="M32 62L16 44L10 18" fill="none" stroke="#f5d78c" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="9" cy="11" rx="6" ry="8" fill="#e3ac86" transform="rotate(-18 9 11)"/></g>
+    <g class="wave"><path d="M88 62L104 44L110 18" fill="none" stroke="#f5d78c" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="111" cy="11" rx="6" ry="8" fill="#e3ac86" transform="rotate(18 111 11)"/></g></g>
+</svg>
+
+<div id="rocket"><svg viewBox="0 0 30 90"><rect x="14" y="40" width="2" height="50" fill="#8a5a2b"/><path d="M15 0C22 10 22 22 21 36H9C8 22 8 10 15 0Z" fill="#e63946"/><rect x="9" y="36" width="12" height="22" fill="#f4f1de"/><rect x="9" y="42" width="12" height="4" fill="#2a9d8f"/><path d="M9 50L1 64L9 60ZM21 50L29 64L21 60Z" fill="#e63946"/></svg><i id="spark"></i></div>
+
+<canvas id="fx"></canvas>
+<div class="bars" id="bars"></div>
+
+<!-- ===== TEXT FOR EACH SLIDE (edit here) ===== -->
+<section class="sc">
+  <div class="eyebrow in" style="--d:0">Fill In Space</div>
+  <div class="script in" style="--d:1">Happy Diwali</div>
+  <p class="t in" style="--d:3">Namaste! Wishing you light, joy and prosperity.</p>
+</section>
+<section class="sc">
+  <div class="script m in" style="--d:0">Share the sweetness</div>
+  <p class="t in" style="--d:1">Your one-stop destination for <b>home interiors</b></p>
+  <div class="chips in" style="--d:2"><span>Furniture</span><span>Home Furnishings</span><span>Home Linen</span><span>Home Décor</span><span>Accessories</span></div>
+</section>
+<section class="sc">
+  <div class="script m in" style="--d:0">Light up the sky!</div>
+  <p class="t in" style="--d:1">May every cracker bring you <b>cheer and good fortune</b>.</p>
+</section>
+<section class="sc">
+  <div class="eyebrow in" style="--d:0">Welcome to Fill In Space</div>
+  <p class="row in" style="--d:1"><b>Address</b>Manchanda Society, near Garhi Bolni Rd,<br>Rewari, Haryana 123401</p>
+  <p class="row in" style="--d:2"><b>Call</b>087088 88244</p>
+  <p class="row in" style="--d:3"><b>Hours</b>Open · Closes 8 pm</p>
+</section>
+<section class="sc">
+  <div class="script m in" style="--d:0;font-size:10.5cqw">Wishing you a bright<br>&amp; beautiful Diwali</div>
+  <p class="t in" style="--d:2">May your home glow with joy, light and togetherness.<br><b>From all of us at Fill In Space</b></p>
+</section>
+
+<div class="tap l" id="prev"></div><div class="tap r" id="next"></div>
+</div>
+<div class="ctl"><button id="pp">Pause</button><button id="rs">Restart</button></div>
+
+<script>
+var $=function(i){return document.getElementById(i)},NS="http://www.w3.org/2000/svg",stage=$("stage"),DUR=5800;
+function mk(tag,at,par){var e=document.createElementNS(NS,tag);for(var k in at)e.setAttribute(k,at[k]);par.appendChild(e);return e}
+/* stars, distant skyline, bulbs */
+for(var i=0;i<46;i++)mk("circle",{cx:Math.random()*360,cy:Math.random()*190,r:Math.random()*1.1+.3,fill:"#ffe9a8",class:"star",style:"animation-delay:"+Math.random()*2+"s"},$("stars"));
+for(var x=0;x<360;){var w=16+Math.random()*26,h=14+Math.random()*34;mk("rect",{x:x,y:204-h,width:w,height:h+4,fill:"#0b1233"},$("city"));
+  for(var k=0;k<Math.floor(h/9);k++)if(Math.random()>.5)mk("rect",{x:x+3+Math.random()*(w-8),y:204-h+4+k*9,width:2.4,height:3.4,fill:"#ffd27a",opacity:.7},$("city"));x+=w+2}
+[[24,214],[60,218],[96,212],[134,206],[172,214],[212,224],[250,220],[290,206],[330,206]].forEach(function(b){mk("circle",{cx:b[0],cy:b[1],r:3.2,fill:"#ffe9a8",class:"bulb"},$("bulbs"))});
+
+/* slides + poses */
+var sc=[].slice.call(document.querySelectorAll(".sc")),bars=$("bars"),poses=["pA","pB","pC","pD","pE"],cur=-1,el=0,paused=false,last=performance.now();
+sc.forEach(function(){var b=document.createElement("div");b.className="bar";b.innerHTML="<i></i>";bars.appendChild(b)});
+function go(i){i=(i+sc.length)%sc.length;
+  sc.forEach(function(s,j){s.classList.toggle("on",j===i)});
+  poses.forEach(function(p,j){$(p).setAttribute("class","pose"+(j===i?" on":""))});
+  [].forEach.call(bars.children,function(b,j){b.className="bar"+(j<i?" done":"");b.firstChild.style.width=j<i?"100%":"0"});
+  var cr={1:"crowdA",2:"crowdB",4:"crowdC"};["crowdA","crowdB","crowdC"].forEach(function(id){$(id).setAttribute("class","crowd"+(cr[i]===id?" on":""))});
+  cur=i;el=0;if(i===2)setTimeout(launch,1400)}
+$("next").onclick=function(){go(cur+1)};$("prev").onclick=function(){go(cur-1)};
+$("pp").onclick=function(){paused=!paused;this.textContent=paused?"Play":"Pause"};$("rs").onclick=function(){go(0)};
+(function tick(t){requestAnimationFrame(tick);var dt=t-last;last=t;if(!paused&&cur>=0){el+=dt;bars.children[cur].firstChild.style.width=Math.min(el/DUR*100,100)+"%";if(el>=DUR)go(cur+1)}})(performance.now());
+
+/* skyshots */
+var cv=$("fx"),cx=cv.getContext("2d"),Pt=[],Sh=[];
+function sz(){cv.width=stage.clientWidth;cv.height=stage.clientHeight}sz();window.addEventListener("resize",sz);
+var cols=["#ffd35a","#ff7eb6","#ffffff","#7fd0ff","#ff9a4a","#b78cff","#6dffb2"];
+function burst(x,y,kind){var c=cols[Math.floor(Math.random()*cols.length)],c2=cols[Math.floor(Math.random()*cols.length)],n=kind==="big"?100:60;
+  for(var i=0;i<n;i++){var a=i/n*6.283,v=kind==="ring"?2.3:(1+Math.random()*2.5)*(kind==="big"?1.25:1);
+    Pt.push({x:x,y:y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,l:1,dec:kind==="willow"?.007:.014,g:kind==="willow"?.05:.03,c:i%3?c:c2,s:kind==="big"?2.2:1.7})}}
+function shell(){var W=cv.width,H=cv.height;Sh.push({x:W*(.08+Math.random()*.84),y:H*.34,ty:H*(.06+Math.random()*.2),v:2.2+Math.random()*1,k:["peony","ring","willow"][Math.floor(Math.random()*3)]})}
+setInterval(function(){if(!paused)shell()},800);shell();
+(function loop(){requestAnimationFrame(loop);
+  cx.globalCompositeOperation="destination-out";cx.fillStyle="rgba(0,0,0,.2)";cx.fillRect(0,0,cv.width,cv.height);cx.globalCompositeOperation="source-over";
+  Sh=Sh.filter(function(s){if(!paused)s.y-=s.v;if(s.y<=s.ty){burst(s.x,s.y,s.k);return false}
+    cx.fillStyle="#ffe9a8";cx.shadowColor="#ffb300";cx.shadowBlur=8;cx.beginPath();cx.arc(s.x,s.y,1.6,0,7);cx.fill();cx.shadowBlur=0;return true});
+  Pt=Pt.filter(function(p){return p.l>0});
+  Pt.forEach(function(p){if(!paused){p.x+=p.vx;p.y+=p.vy;p.vy+=p.g;p.vx*=.985;p.l-=p.dec}
+    cx.globalAlpha=Math.max(p.l,0);cx.fillStyle=p.c;cx.shadowColor=p.c;cx.shadowBlur=7;cx.beginPath();cx.arc(p.x,p.y,p.s,0,7);cx.fill()});
+  cx.globalAlpha=1;cx.shadowBlur=0})();
+
+/* slide 3: the owner lights a rocket */
+var rk=$("rocket"),sp=$("spark");
+function launch(){
+  rk.style.opacity=1;sp.style.display="block";
+  setTimeout(function(){sp.style.display="none";var up=stage.clientHeight*.66;
+    var a=rk.animate([{transform:"translateY(0)"},{transform:"translateY(-"+up+"px)"}],{duration:1500,easing:"ease-in",fill:"forwards"});
+    var tr=setInterval(function(){var b=rk.getBoundingClientRect(),s=stage.getBoundingClientRect();
+      Pt.push({x:b.left-s.left+b.width/2,y:b.bottom-s.top,vx:(Math.random()-.5)*.6,vy:Math.random()*.8,l:1,dec:.05,g:.02,c:"#ffb300",s:2})},40);
+    a.onfinish=function(){clearInterval(tr);var b=rk.getBoundingClientRect(),s=stage.getBoundingClientRect(),X=b.left-s.left+b.width/2,Y=b.top-s.top;
+      burst(X,Y,"big");burst(X,Y,"ring");rk.style.opacity=0;a.cancel()}},1000)}
+
+/* diyas along the showroom base */
+var rowsD=[];for(var dx=18;dx<=342;dx+=25){if(dx>=130&&dx<=230)rowsD.push([dx,418]);rowsD.push([dx,502])}
+rowsD.forEach(function(q){var dx=q[0];var g=mk("g",{transform:"translate("+dx+" "+q[1]+")"},$("rowDiyas"));
+  mk("circle",{cx:0,cy:-3,r:8,fill:"rgba(255,179,0,.22)"},g);mk("path",{d:"M-8 0H8Q7 7 0 8Q-7 7-8 0Z",fill:"#c9772a"},g);
+  var f=mk("ellipse",{cx:0,cy:-4,rx:2.2,ry:4.6,fill:"#ffb300",class:"fl",style:"animation-delay:"+(dx%7)*.07+"s"},g)})
+
+/* marigold garlands: roof line + door arch */
+function mg(x,y,i){var c=mk("circle",{cx:x,cy:y,r:3.1,fill:i%2?"#f08a24":"#ffb300",stroke:"#d96a10","stroke-width":.5},$("garland"));}
+var gi=0;for(var gx=10;gx<=350;gx+=8.5)mg(gx,214+7*Math.sin(gx/36),gi++);
+for(var gy=410;gy>=318;gy-=7)mg(150,gy,gi++);
+for(var an=Math.PI;an>=0;an-=.2)mg(180-32*Math.cos(Math.PI-an),318-32*Math.sin(an),gi++);
+for(var gy2=318;gy2<=410;gy2+=7)mg(210,gy2,gi++);
+/* floating sky lanterns */
+for(var li=0;li<7;li++){var sg=mk("g",{transform:"translate("+(24+li*50+Math.random()*16)+" "+(205-Math.random()*20)+") scale("+(.8+Math.random()*.7)+")"},$("skyl")),
+  ig=mk("g",{class:"skyl",style:"animation-duration:"+(13+Math.random()*7)+"s;animation-delay:-"+Math.random()*14+"s"},sg);
+  mk("circle",{cx:0,cy:-8,r:16,fill:"rgba(255,170,60,.22)"},ig);
+  mk("path",{d:"M-8 0C-11 -11 -7 -20 0 -21C7 -20 11 -11 8 0Z",fill:"#ff9a3c",stroke:"#ffd28a","stroke-width":.8},ig);
+  mk("path",{d:"M-5 -3C-6 -10 -3 -17 0 -17C3 -17 6 -10 5 -3Z",fill:"#ffd27a",opacity:.75},ig);mk("circle",{cx:0,cy:1,r:2.2,fill:"#fff3b0"},ig)}
+
+/* big rangoli */
+(function(){var g=$("rangoli"),cx0=180,cy0=592,cl=["#e53935","#fdd835","#8e24aa","#43a047","#fb8c00","#1e88e5","#ec407a"];
+  mk("ellipse",{cx:cx0,cy:cy0,rx:128,ry:34,fill:"#f7f1e3"},g);
+  [[120,32,"#d81b60"],[100,27,"#ffb300"],[80,21,"#7b1fa2"],[60,16,"#26a69a"],[40,11,"#e53935"],[22,6,"#fff59d"]].forEach(function(r){mk("ellipse",{cx:cx0,cy:cy0,rx:r[0],ry:r[1],fill:r[2]},g)});
+  [[104,16],[84,14],[64,12]].forEach(function(r,ri){for(var i=0;i<r[1];i++){var a=i/r[1]*6.283;mk("ellipse",{cx:cx0+r[0]*Math.cos(a),cy:cy0+r[0]*.27*Math.sin(a),rx:9-ri*1.5,ry:3.2-ri*.5,fill:cl[(i+ri)%cl.length],stroke:"#fff","stroke-width":.6},g)}});
+})();
+/* children */
+function kid(x,fy,k,o,pose,flip,d){var g=o.girl,sk=o.skin,h="",sl=g?o.dup:o.top;
+  h+='<ellipse cx="0" cy="112" rx="24" ry="4" fill="rgba(0,0,0,.35)"/>';
+  if(g)h+='<path d="M-24 40C-30 70 -22 86 -16 90H16C22 86 30 70 24 40Z" fill="#17110f"/><path d="M-14 66L-31 108H31L14 66Z" fill="'+o.top+'"/><path d="M-31 102H31L32 108H-32Z" fill="#f2c14e"/><path d="M-21 90Q0 97 21 90" fill="none" stroke="#f2c14e" stroke-width="1.2"/>';
+  else h+='<path d="M-10 84H-2L-3 108H-11Z M2 84H10L11 108H3Z" fill="#f4f0e8"/><ellipse cx="-7" cy="110" rx="7" ry="3.4" fill="#7a4a2a"/><ellipse cx="7" cy="110" rx="7" ry="3.4" fill="#7a4a2a"/>';
+  if(g)h+='<path d="M-13 54C-13 49 -8 47 0 47C8 47 13 49 13 54L12 72H-12Z" fill="'+o.dup+'"/><path d="M-12 68H12L14 72H-14Z" fill="#f2c14e"/>';
+  else h+='<path d="M-15 54C-15 49 -8 47 0 47C8 47 15 49 15 54L17 90H-17Z" fill="'+o.top+'"/><path d="M0 49V90" stroke="rgba(0,0,0,.18)"/><path d="M-5 47Q0 53 5 47" fill="none" stroke="#f2c14e" stroke-width="1.6"/><path d="M-17 86H17V90H-17Z" fill="#f2c14e"/>';
+  h+='<rect x="-3" y="44" width="6" height="8" fill="'+sk+'"/>';
+  var arm=function(p){return '<path d="'+p+'" fill="none" stroke="'+sl+'" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>'},hand=function(a,b){return '<circle cx="'+a+'" cy="'+b+'" r="4.2" fill="'+sk+'"/>'};
+  if(pose==="reach")h+=arm("M-12 56L-23 72L-30 76")+hand(-32,77)+'<circle cx="-36" cy="72" r="3.6" fill="#f08a24"/>'+arm("M12 56L17 80")+hand(17,83);
+  else if(pose==="spark")h+=arm("M12 56L24 44L28 28")+hand(29,24)+'<line x1="29" y1="24" x2="40" y2="6" stroke="#8a8f99" stroke-width="1.6"/><g transform="translate(41 4)"><circle r="9" fill="rgba(255,200,80,.45)"/><g class="spin" stroke="#ffe9a8" stroke-width="1.2"><path d="M0 -9V9M-9 0H9M-6.5 -6.5L6.5 6.5M-6.5 6.5L6.5 -6.5"/></g><circle r="2" fill="#fff"/></g>'+arm("M-12 56L-17 80")+hand(-17,83);
+  else h+=arm("M-12 56L-23 40L-26 24")+hand(-27,20)+arm("M12 56L23 40L26 24")+hand(27,20);
+  h+='<ellipse cx="-20" cy="31" rx="3" ry="4.5" fill="'+sk+'"/><ellipse cx="20" cy="31" rx="3" ry="4.5" fill="'+sk+'"/><ellipse cx="0" cy="30" rx="21" ry="20" fill="'+sk+'"/>'
+   +'<path d="M-22 28C-24 6 -10 -3 0 -3C10 -3 24 6 22 28C19 18 12 11 0 11C-12 11 -19 18 -22 28Z" fill="#17110f"/>'
+   +(g?'<path d="M0 -3V11" stroke="#2b2220"/><circle cx="15" cy="6" r="3.2" fill="#e84a5f"/><circle cx="0" cy="14" r="1.4" fill="#d7263d"/><circle cx="-21" cy="39" r="1.6" fill="#f4cd6a"/><circle cx="21" cy="39" r="1.6" fill="#f4cd6a"/>':'<path d="M-14 8Q0 1 14 8" fill="none" stroke="#2b2220" stroke-width="1"/>')
+   +'<ellipse cx="-8" cy="30" rx="5" ry="6" fill="#fff"/><ellipse cx="8" cy="30" rx="5" ry="6" fill="#fff"/><circle cx="-7.4" cy="31" r="3.7" fill="#3a2418"/><circle cx="8.6" cy="31" r="3.7" fill="#3a2418"/><circle cx="-6.2" cy="29.6" r="1.3" fill="#fff"/><circle cx="9.8" cy="29.6" r="1.3" fill="#fff"/>'
+   +'<path d="M-13 22Q-8 19.5 -4 22M4 22Q8 19.5 13 22" fill="none" stroke="#17110f" stroke-width="1.6" stroke-linecap="round"/>'
+   +'<circle cx="-13" cy="38" r="3.4" fill="#ef7a7a" opacity=".4"/><circle cx="13" cy="38" r="3.4" fill="#ef7a7a" opacity=".4"/>'
+   +'<path d="M-7 40Q0 51 7 40Z" fill="#7a2230"/><path d="M-5.5 40.6H5.5Q0 43.4 -5.5 40.6Z" fill="#fff"/>';
+  return '<g transform="translate('+x+' '+(fy-112*k)+') scale('+(flip?-k:k)+' '+k+')"><g class="'+(pose==="cheer"?"jump":"pbob")+'" style="animation-delay:'+d+'s">'+h+'</g></g>'}
+var BOY={girl:0,skin:"#d9a07a"},C=function(g,top,dup,skin){return {girl:g,top:top,dup:dup,skin:skin||"#d9a07a"}};
+var kB=C(0,"#2d6fd0"),kT=C(0,"#1aa7a0","",'#cf966f'),kY=C(0,"#f4c430"),kR=C(0,"#d9433a","",'#cf966f'),gP=C(1,"#e8478b","#f5b83d"),gV=C(1,"#8e44ad","#f1c40f",'#cf966f'),gO=C(1,"#f08a24","#2fa88a");
+$("crowdA").innerHTML=kid(250,632,1,kB,"reach",0,0)+kid(292,640,.95,gP,"reach",0,.2)+kid(330,620,.88,kT,"reach",0,.4)+kid(112,634,1,gV,"reach",1,.1)+kid(70,642,.95,kY,"reach",1,.3)+kid(32,620,.88,gO,"reach",1,.5);
+$("crowdB").innerHTML=kid(38,622,.9,kY,"spark",0,0)+kid(82,640,1,gV,"spark",0,.2)+kid(116,630,.95,kB,"spark",0,.4)+kid(272,640,1,gP,"spark",0,.1);
+$("crowdC").innerHTML=kid(36,624,.9,gO,"cheer",0,0)+kid(80,638,1,kT,"cheer",0,.15)+kid(118,630,.95,gV,"cheer",0,.3)+kid(242,630,.95,kR,"cheer",0,.2)+kid(286,640,1,gP,"cheer",0,.05)+kid(328,622,.9,kY,"cheer",0,.35);
+go(0);
+</script>
+</body>
+</html>
